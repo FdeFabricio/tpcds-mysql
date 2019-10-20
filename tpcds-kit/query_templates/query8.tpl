@@ -127,14 +127,14 @@
                           '[ZIP.387]','[ZIP.388]','[ZIP.389]','[ZIP.390]','[ZIP.391]',
                           '[ZIP.392]','[ZIP.393]','[ZIP.394]','[ZIP.395]','[ZIP.396]',
                           '[ZIP.397]','[ZIP.398]','[ZIP.399]','[ZIP.400]')
-     intersect
-      select ca_zip
+     AND substr(ca_zip,1,5) IN
+     ( select ca_zip
       from (SELECT substr(ca_zip,1,5) ca_zip,count(*) cnt
             FROM customer_address, customer
             WHERE ca_address_sk = c_current_addr_sk and
                   c_preferred_cust_flag='Y'
             group by ca_zip
-            having count(*) > 10)A1)A2) V1
+            having count(*) > 10)A1))A2) V1
  where ss_store_sk = s_store_sk
   and ss_sold_date_sk = d_date_sk
   and d_qoy = [QOY] and d_year = [YEAR]

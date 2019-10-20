@@ -48,7 +48,7 @@ with  cross_items as
  where ss_item_sk = iss.i_item_sk
    and ss_sold_date_sk = d1.d_date_sk
    and d1.d_year between [YEAR] AND [YEAR] + 2
- intersect 
+ and exists (
  select ics.i_brand_id
      ,ics.i_class_id
      ,ics.i_category_id
@@ -58,7 +58,7 @@ with  cross_items as
  where cs_item_sk = ics.i_item_sk
    and cs_sold_date_sk = d2.d_date_sk
    and d2.d_year between [YEAR] AND [YEAR] + 2
- intersect
+ ) and exists (
  select iws.i_brand_id
      ,iws.i_class_id
      ,iws.i_category_id
@@ -67,7 +67,7 @@ with  cross_items as
      ,date_dim d3
  where ws_item_sk = iws.i_item_sk
    and ws_sold_date_sk = d3.d_date_sk
-   and d3.d_year between [YEAR] AND [YEAR] + 2)
+   and d3.d_year between [YEAR] AND [YEAR] + 2)) t1
  where i_brand_id = brand_id
       and i_class_id = class_id
       and i_category_id = category_id
@@ -134,7 +134,7 @@ with  cross_items as
        group by i_brand_id,i_class_id,i_category_id
        having sum(ws_quantity*ws_list_price) > (select average_sales from avg_sales)
  ) y
- group by rollup (channel, i_brand_id,i_class_id,i_category_id)
+ group by channel, i_brand_id,i_class_id,i_category_id with rollup
  order by channel,i_brand_id,i_class_id,i_category_id
  [_LIMITC];
  
@@ -150,7 +150,7 @@ with  cross_items as
  where ss_item_sk = iss.i_item_sk
    and ss_sold_date_sk = d1.d_date_sk
    and d1.d_year between [YEAR] AND [YEAR] + 2
- intersect
+ and exists(
  select ics.i_brand_id
      ,ics.i_class_id
      ,ics.i_category_id
@@ -160,7 +160,7 @@ with  cross_items as
  where cs_item_sk = ics.i_item_sk
    and cs_sold_date_sk = d2.d_date_sk
    and d2.d_year between [YEAR] AND [YEAR] + 2
- intersect
+ ) and exists (
  select iws.i_brand_id
      ,iws.i_class_id
      ,iws.i_category_id
@@ -169,7 +169,7 @@ with  cross_items as
      ,date_dim d3
  where ws_item_sk = iws.i_item_sk
    and ws_sold_date_sk = d3.d_date_sk
-   and d3.d_year between [YEAR] AND [YEAR] + 2) x
+   and d3.d_year between [YEAR] AND [YEAR] + 2)) x
  where i_brand_id = brand_id
       and i_class_id = class_id
       and i_category_id = category_id

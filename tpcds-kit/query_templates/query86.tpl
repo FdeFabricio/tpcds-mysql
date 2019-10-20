@@ -51,7 +51,7 @@
     d1.d_month_seq between [DMS] and [DMS]+11
  and d1.d_date_sk = ws_sold_date_sk
  and i_item_sk  = ws_item_sk
- group by rollup(i_category,i_class)
+ group by i_category, i_class with rollup
  order by
    lochierarchy desc,
    case when lochierarchy = 0 then i_category end,

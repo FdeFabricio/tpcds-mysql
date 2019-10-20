@@ -61,7 +61,7 @@
        cd_education_status = '[ES]' and
        d_year = [YEAR] and
        s_state in ('[STATE_A]','[STATE_B]', '[STATE_C]', '[STATE_D]', '[STATE_E]', '[STATE_F]')
- group by rollup (i_item_id, s_state)
+ group by i_item_id, s_state with rollup
  order by i_item_id
          ,s_state
  [_LIMITC];
