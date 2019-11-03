@@ -83,5 +83,6 @@ select 'catalog channel' as channel
         , returns
  ```
 
- ### full outer join
- https://github.com/FdeFabricio/tpcds-mysql/commit/0b13e8d16db11996292a28bb44b82a18029756a4?diff=unified#diff-172b9509a3d7a434849f42c207ae93c4R72-R84
+## Resources
+1. [TPC-DS specification](http://www.tpc.org/tpcds/)
+2. [MySQL Slow Query Log Tutorial](https://www.a2hosting.com/kb/developer-corner/mysql/enabling-the-slow-query-log-in-mysql)
