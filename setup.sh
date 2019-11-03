@@ -15,6 +15,3 @@ sudo mysql -uroot -e "SET GLOBAL slow_query_log_file ='/var/log/mysql/slow-query
 sudo mysql -uroot -e "SET GLOBAL slow_query_log = 1;"
 sudo mysql -uroot -e "SET GLOBAL long_query_time = 0;"
 sudo mysql -uroot -e "SET long_query_time = 0;"
-
-# add source code to home directory 
-cd ~ && git clone https://github.com/FdeFabricio/tpcds-mysql.git
