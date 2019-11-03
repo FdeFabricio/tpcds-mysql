@@ -1,8 +1,34 @@
 # tpcds-mysql
-This project consists of
- to run TPC-DS benchmark on MySQL. It includes all the changes on the templates for the MySQL dialect and a script to run the pipeline automatically hopefully on the cloud, like GCP's [Compute Engine](https://cloud.google.com/compute/). It uses the toolkit version 2.10.0 from [gregrahn's repository](https://github.com/gregrahn/tpcds-kit) since it includes MACOS as target for the building.
+This project consists of how to perform the TPC-DS benchmark on MySQL 8.0. It includes all the changes on the templates for the MySQL dialect and a script to run the pipeline locally or on the cloud such as on one instance of GCP's [Compute Engine](https://cloud.google.com/compute/). It uses the toolkit version 2.10.0 from [gregrahn's repository](https://github.com/gregrahn/tpcds-kit) since it includes MACOS as target for the building, although this repository already contains the toolkit builded for LINUX.
 
-## How to run
+## How to run on GCP
+1. Access Compute Engine and create a VM instance with Ubuntu 18.04 (you might need disk larger than 10 GB)
+2. Connect to the instance from your terminal (I used [Cloud DSK](https://cloud.google.com/sdk/install) command `gcloud beta compute` from the connection menu)
+
+<p align="center">
+<img src="https://i.imgur.com/v8Zvssf.png" width="500">
+</p>
+
+3. Download the project and run the setup
+```bash
+git clone https://github.com/FdeFabricio/tpcds-mysql.git && \
+cd tpcds-mysql && \
+./setup.sh
+```
+This will install MySQL (bear in mind you must select verison 8.0 and leave the root password empty). It also setups variables for logging query execution.
+
+<p align="center">
+<img src="https://i.imgur.com/z813Iw6.png" width="500">
+</p>
+
+4. Now you can either run the tasks separatly or run the whole pipeline altogether
+```bash
+# scale factor of 1 GB, database name tpcds, runn all tasks in order
+./script.sh 1 tpcds all
+```
+
+5. Save the output and extract the execution time of each query separately by processing the log files in `ls /var/log/mysql/query*.log`. The script also outputs the results and eventual errors in the folder `output`.
+
 ## Template changes
 All the changes on the query templates can be found in [0b13e8d](0b13e8d16db11996292a28bb44b82a18029756a4). Some of the changes are:
 ### addition and substraction operations with date
